@@ -177,7 +177,12 @@ scheduler.add_job(run_mapping_job, trigger='cron', hour=0, minute=0,
                   id='daily_mitre_mapping')
 
 try:
-    logger.info("Scheduler started – next run at %s", scheduler.get_jobs()[0].next_run_time)
+    jobs = scheduler.get_jobs()
+    if jobs:
+        next_run = getattr(jobs[0], 'next_run_time', None)
+        logger.info("– Scheduler started –")
+    else:
+        logger.info("Scheduler started – no jobs scheduled")
     scheduler.start()
 except (KeyboardInterrupt, SystemExit):
     logger.info("Scheduler stopped by user; exiting…")
