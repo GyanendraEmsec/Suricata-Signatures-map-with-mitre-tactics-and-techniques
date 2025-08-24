@@ -100,7 +100,7 @@ def run_mapping_job() -> None:
     try:
         query = {
             "size": 0,
-            "query": {"range": {"data._source.@timestamp": {"gte": "now-24h"}}},
+            "query": {"range": {"data._source.@timestamp": {"gte": "now-25h"}}},
             "aggs": {
                 "sig": {
                     "terms": {
